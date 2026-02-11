@@ -1,6 +1,6 @@
 import sqlite3
 from typing import Any
-from app.schemas import ShipmentCreate, ShipmentUpdate
+from app.api.schemas.shipment import ShipmentCreate, ShipmentUpdate
 from contextlib import contextmanager
 
 class Database:
