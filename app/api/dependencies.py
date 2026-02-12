@@ -1,3 +1,4 @@
+from uuid import UUID
 from app.database.models import Seller
 from app.database.redis import is_jti_blacklisted
 from app.services.seller import SellerService
@@ -27,7 +28,7 @@ async def get_current_seller(
     token_data: Annotated[dict, Depends(get_access_token)],
     session: SessionDep,
 ):
-    return await session.get(Seller, token_data["user"]["id"])
+    return await session.get(Seller, UUID(token_data["user"]["id"]))
 
 def get_shipment_service(session: SessionDep):
     return ShipmentService(session)

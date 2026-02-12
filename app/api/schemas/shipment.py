@@ -1,6 +1,7 @@
 from random import randint
+from uuid import UUID
 from pydantic import BaseModel, Field
-from app.database.models import ShipmentStatus
+from app.database.models import Seller, ShipmentStatus
 from datetime import datetime
 
 def random_destination():
@@ -12,6 +13,8 @@ class BaseShipment(BaseModel):
     destination: int
 
 class ShipmentRead(BaseShipment):
+    id: UUID
+    seller: Seller
     status : ShipmentStatus
     estimated_delivery: datetime
 
