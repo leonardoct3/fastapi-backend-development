@@ -4,11 +4,11 @@ from sqlmodel import SQLModel
 from fastapi import Depends
 from sqlalchemy.orm import sessionmaker
 
-from app.config.config import settings
+from app.config.config import db_settings
 
 engine = create_async_engine(
     # database type/dialect and file name
-    url=settings.POSTGRES_URL,
+    url=db_settings.POSTGRES_URL,
     echo=True
 )
 
