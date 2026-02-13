@@ -37,7 +37,7 @@ class UserService(BaseService):
                 detail="Seller email not found"
             )
         
-        if not password_context.verify(password, self.model.password_hash):
+        if not password_context.verify(password, user.password_hash):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Invalid credentials"
@@ -45,8 +45,8 @@ class UserService(BaseService):
         
         return generate_access_token(data={
             "user": {
-                "name": self.model.name,
-                "id": str(self.model.id)
+                "name": user.name,
+                "id": str(user.id)
             }
         })
 

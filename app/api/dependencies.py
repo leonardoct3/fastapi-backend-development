@@ -63,7 +63,7 @@ async def get_current_partner(
 
 
 def get_shipment_service(session: SessionDep):
-    return ShipmentService(session)
+    return ShipmentService(session, DeliveryPartnerService(session))
 
 def get_seller_service(session: SessionDep):
     return SellerService(session)

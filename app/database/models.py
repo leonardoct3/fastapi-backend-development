@@ -18,7 +18,7 @@ class Shipment(SQLModel, table=True):
     id: UUID = Field(
         sa_column=Column(
             postgresql.UUID,
-            default=uuid4(),
+            default=uuid4,
             primary_key=True
         )
     )
@@ -37,7 +37,7 @@ class Shipment(SQLModel, table=True):
 
     created_at : datetime = Field(sa_column=Column(
         postgresql.TIMESTAMP,
-        default=datetime.now()
+        default=datetime.now
     ))
 
 class User(SQLModel):
@@ -51,7 +51,7 @@ class Seller(User, table=True):
     id: UUID = Field(
         sa_column=Column(
             postgresql.UUID,
-            default=uuid4(),
+            default=uuid4,
             primary_key=True
         )
     )
@@ -60,7 +60,7 @@ class Seller(User, table=True):
 
     created_at : datetime = Field(sa_column=Column(
         postgresql.TIMESTAMP,
-        default=datetime.now()
+        default=datetime.now
     ))
 
 class DeliveryPartner(User, table=True):
@@ -69,11 +69,11 @@ class DeliveryPartner(User, table=True):
     id: UUID = Field(
         sa_column=Column(
             postgresql.UUID,
-            default=uuid4(),
+            default=uuid4,
             primary_key=True
         )
     )
-    
+
     serviceable_zip_codes: list[int] = Field(
         sa_column=Column(ARRAY(INTEGER))
     )
@@ -84,7 +84,7 @@ class DeliveryPartner(User, table=True):
 
     created_at : datetime = Field(sa_column=Column(
         postgresql.TIMESTAMP,
-        default=datetime.now()
+        default=datetime.now
     ))
     
     @property
@@ -92,9 +92,9 @@ class DeliveryPartner(User, table=True):
         return [
             shipment
             for shipment in self.shipments
-            if shipment.status == ShipmentStatus.delivered
+            if shipment.status == ShipmentStatus.placed
         ]
         
     @property
     def current_handling_capacity(self):
-        self.max_handling_capacity - len(self.active_shipments())
+        return self.max_handling_capacity - len(self.active_shipments)

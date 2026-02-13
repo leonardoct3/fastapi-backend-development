@@ -23,18 +23,18 @@ class ShipmentService(BaseService):
             seller_id=seller.id
         )
         
-        self.partner_service.assign_shipment(new_shipment)
+        await self.partner_service.assign_shipment(new_shipment)
 
         return await self._add(new_shipment)
 
 
-    async def update(self, id: str, shipment_update: ShipmentUpdate) -> Shipment:
+    async def update(self, id: UUID, shipment_update: ShipmentUpdate) -> Shipment:
         shipment = await self.get(id)
         shipment.sqlmodel_update(shipment_update)
         
         return await self._update(shipment)
     
-    async def delete(self, id: int) -> None:
+    async def delete(self, id: UUID) -> None:
         await self._delete(
             await self.get(id)
         )

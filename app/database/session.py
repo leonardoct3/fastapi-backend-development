@@ -9,7 +9,6 @@ from app.config.config import db_settings
 engine = create_async_engine(
     # database type/dialect and file name
     url=db_settings.POSTGRES_URL,
-    echo=True
 )
 
 async def create_database_tables():
