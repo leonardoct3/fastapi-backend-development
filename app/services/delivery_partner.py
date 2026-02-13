@@ -5,7 +5,6 @@ from app.services.user import UserService
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select, any_
 from typing import Sequence
-from rich import print
 
 class DeliveryPartnerService(UserService):
     def __init__(self, session: AsyncSession):
@@ -29,7 +28,6 @@ class DeliveryPartnerService(UserService):
         eligible_partners = await self.get_partners_by_zipcode(shipment.destination)
 
         for partner in eligible_partners:
-            print(partner, partner.current_handling_capacity, partner.active_shipments)
             if partner.current_handling_capacity > 0:
                 partner.shipments.append(shipment)
                 return partner

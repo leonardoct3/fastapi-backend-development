@@ -94,11 +94,9 @@ class Database:
 @contextmanager
 def managed_db():
     db = Database()
-    print("Entered Setup")
     db.connect_to_db()
     db.create_table()
     yield db
-    print("Closed Setup")
 
 with managed_db() as db:
     db.get(1)
