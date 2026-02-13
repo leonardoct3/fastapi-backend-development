@@ -14,9 +14,7 @@ class SellerService(UserService):
         super().__init__(Seller, session)
 
     async def add(self, seller_create: SellerCreate) -> Seller:
-
         return await self._add_user(**seller_create.model_dump())
     
-    async def get(self, id: str) -> Seller:
-        return await self.session.get(Seller, id)
-    
+    async def token(self, email, password) -> str:
+        return self._generate_token(email, password)

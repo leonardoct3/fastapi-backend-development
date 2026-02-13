@@ -86,3 +86,15 @@ class DeliveryPartner(User, table=True):
         postgresql.TIMESTAMP,
         default=datetime.now()
     ))
+    
+    @property
+    def active_shipments(self):
+        return [
+            shipment
+            for shipment in self.shipments
+            if shipment.status == ShipmentStatus.delivered
+        ]
+        
+    @property
+    def current_handling_capacity(self):
+        self.max_handling_capacity - len(self.active_shipments())

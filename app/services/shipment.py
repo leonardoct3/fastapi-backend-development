@@ -4,11 +4,13 @@ from app.api.schemas.shipment import ShipmentCreate, ShipmentUpdate
 from app.database.models import Seller, Shipment, ShipmentStatus
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.services.base import BaseService
+from app.services.delivery_partner import DeliveryPartnerService
 
 
 class ShipmentService(BaseService):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: AsyncSession, partner_service: DeliveryPartnerService):
         super().__init__(Shipment, session)
+        self.partner_service = partner_service
     
     async def get(self, id: UUID) -> Shipment:
         return await self._get(id)
@@ -20,6 +22,8 @@ class ShipmentService(BaseService):
             estimated_delivery=datetime.now() + timedelta(days=3),
             seller_id=seller.id
         )
+        
+        self.partner_service.assign_shipment(new_shipment)
 
         return await self._add(new_shipment)
 

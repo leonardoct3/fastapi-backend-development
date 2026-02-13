@@ -27,7 +27,7 @@ class UserService(BaseService):
         )
         return await self._add(user)
 
-    async def token(self, email, password) -> str:
+    async def _generate_token(self, email, password) -> str:
         # Validate Credentials
         user = await self._get_by_email(email)
 

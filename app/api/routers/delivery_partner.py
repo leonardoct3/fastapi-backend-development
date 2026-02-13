@@ -38,4 +38,6 @@ async def update_delivery_partner(
     partner: DeliveryPartnerDep,
     service: DeliveryPartnerServiceDep
 ):
-    pass
+    return await service.update(
+        partner.sqlmodel_update(partner_update)
+    )
