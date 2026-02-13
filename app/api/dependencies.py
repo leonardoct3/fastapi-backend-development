@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.session import get_session
 from app.core.security import oauth2_scheme_seller, oauth2_scheme_partner
 from app.services.shipment_event import ShipmentEventService
-from app.utils.token import decode_access_token
+from app.utils.jwt_token import decode_access_token
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]
 

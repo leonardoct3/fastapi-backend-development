@@ -5,7 +5,7 @@ from app.services.base import BaseService
 from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
 
-from app.utils.token import generate_access_token
+from app.utils.jwt_token import generate_access_token
 
 password_context = CryptContext(schemes="bcrypt", deprecated="auto")
 

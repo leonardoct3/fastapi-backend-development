@@ -1,7 +1,6 @@
 from app.database.models import Shipment, ShipmentEvent, ShipmentStatus
 from app.services.base import BaseService
 
-
 class ShipmentEventService(BaseService):
     def __init__(self, session):
         super().__init__(ShipmentEvent, session)
@@ -27,8 +26,12 @@ class ShipmentEventService(BaseService):
         return await self._add(new_event)
     
     async def get_latest_event(self, shipment: Shipment):
-        timeline = shipment.timeline.sort(key=lambda item: item.created_at)
-        return timeline[-1]
+        timeline = sorted(
+            shipment.timeline or [],
+            key=lambda item: item.created_at,
+        )
+
+        return timeline[-1] if timeline else None
 
     def _generate_description(self, status: ShipmentStatus, location: int):
         match status:
@@ -38,5 +41,7 @@ class ShipmentEventService(BaseService):
                 return "successfully delivered"
             case ShipmentStatus.out_for_delivery:
                 return "shipment out for delivery"
+            case ShipmentStatus.cancelled:
+                return "cancelled by the seller"
             case _:
                 return f"scanned at {location}"

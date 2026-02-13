@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 import uuid
-from fastapi import HTTPException, status
 import jwt
+from fastapi import HTTPException, status
 from app.config.config import security_settings
 from jwt import ExpiredSignatureError, PyJWTError
 

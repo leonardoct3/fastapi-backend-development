@@ -39,14 +39,14 @@ async def update_shipment(
 
     if not update:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, 
-            detail="No data provided to update"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="No data provided to update"
         )
 
     return await service.update(id, shipment_update, partner)
 
 
-@router.delete("/")
-async def delete_shipment(id: UUID, service: ShipmentServiceDep) -> dict[str, str]:
-    await service.delete(id)
-    return {"detail": f"Shipment with id #{id} was successfully deleted."}
+@router.get("/cancel", response_model=ShipmentRead)
+async def cancel_shipment(
+    id: UUID, seller: SellerDep, service: ShipmentServiceDep
+) -> dict[str, str]:
+    return await service.cancel(id, seller)
