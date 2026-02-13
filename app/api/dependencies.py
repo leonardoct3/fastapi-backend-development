@@ -5,7 +5,7 @@ from app.services.delivery_partner import DeliveryPartnerService
 from app.services.seller import SellerService
 from app.services.shipment import ShipmentService
 from typing import Annotated
-from fastapi import Depends, status, HTTPException
+from fastapi import BackgroundTasks, Depends, status, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.session import get_session
 from app.core.security import oauth2_scheme_seller, oauth2_scheme_partner
@@ -67,9 +67,9 @@ async def get_current_partner(
     return partner
 
 
-def get_shipment_service(session: SessionDep):
+def get_shipment_service(session: SessionDep, tasks: BackgroundTasks):
     return ShipmentService(
-        session, DeliveryPartnerService(session), ShipmentEventService(session)
+        session, DeliveryPartnerService(session), ShipmentEventService(session, tasks)
     )
 
 

@@ -1,11 +1,7 @@
-from random import randint
 from uuid import UUID
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 from app.database.models import ShipmentEvent, ShipmentStatus
 from datetime import datetime
-
-def random_destination():
-    return randint(11000, 11999)
 
 class BaseShipment(BaseModel):
     content: str
@@ -19,7 +15,8 @@ class ShipmentRead(BaseShipment):
 
 
 class ShipmentCreate(BaseShipment):
-    pass
+    client_contact_email: EmailStr
+    client_contact_phone: int | None = Field(default=None)
 
 class ShipmentUpdate(BaseModel):
     location: int | None = Field(default=None)
