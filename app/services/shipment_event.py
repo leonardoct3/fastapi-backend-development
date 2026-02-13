@@ -62,9 +62,10 @@ class ShipmentEventService(BaseService):
 
         match status:
             case ShipmentStatus.placed:
-                subject="Your order is shipped 🚛",
+                subject="Your order is shipped 🚛"
                 template_name = "mail_placed.html"
                 context = {
+                    "id": shipment.id,
                     "seller": shipment.seller.name,
                     "partner": shipment.delivery_partner.name
                 }
@@ -72,6 +73,7 @@ class ShipmentEventService(BaseService):
                 subject="Your order is out for delivery 🛵"
                 template_name = "mail_out_for_delivery.html"
                 context = {
+                    "id": shipment.id,
                     "seller": shipment.seller.name,
                     "partner": shipment.delivery_partner.name
                 }
@@ -79,6 +81,7 @@ class ShipmentEventService(BaseService):
                 subject="Your order was cancelled ❌"
                 template_name = "mail_cancelled.html"
                 context = {
+                    "id": shipment.id,
                     "seller": shipment.seller.name,
                     "partner": shipment.delivery_partner.name
                 }
@@ -86,6 +89,7 @@ class ShipmentEventService(BaseService):
                 subject="Your order was delivered ✅"
                 template_name = "mail_delivered.html"
                 context = {
+                    "id": shipment.id,
                     "seller": shipment.seller.name,
                     "partner": shipment.delivery_partner.name
                 }

@@ -1,7 +1,9 @@
-<body>
-    <p>Hi, </p>
-    <p>Your order with {{ seller }} is picked up by </p>
-    <p>{{ partner }} and is on it's way to you.</p>
-    <br>
-    <p>Powered by FastShip</p>
+<body style="font-family:'Inter',sans-serif;background:#f8fafc;padding:24px;margin:0;">
+  <div style="max-width:580px;margin:0 auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.08);">
+    <h2 style="margin-top:0;color:#0f172a;">Order placed</h2>
+    <p style="color:#475569;margin-bottom:16px;">Thanks for placing your order with {{ seller }}. We’re currently preparing it for pickup.</p>
+    <p style="margin:0 0 20px;color:#475569;">Your delivery partner, {{ partner }}, is assembling the route and will update the tracking information soon.</p>
+    <a href="http://localhost:8000/shipment/track?id={{ id }}" style="display:inline-block;padding:12px 24px;background:#2563eb;color:#fff;border-radius:999px;text-decoration:none;font-weight:600;">Track order</a>
+    <p style="margin:24px 0 0;color:#94a3b8;font-size:13px;">Powered by FastShip · Need help? Reply to this email.</p>
+  </div>
 </body>

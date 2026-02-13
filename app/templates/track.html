@@ -1,0 +1,62 @@
+<body style="font-family:'Inter',sans-serif;background:#f4f4f7;margin:0;padding:32px;">
+    <div
+        style="max-width:500px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 12px 35px rgba(15,23,42,0.12);padding:32px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div
+                    style="width:48px;height:48px;border-radius:16px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;">
+                    <span style="font-size:24px;">📦</span>
+                </div>
+                <div>
+                    <div style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;">Order</div>
+                    <div style="font-size:20px;font-weight:600;color:#0f172a;">#{{ id.hex[-10:] }}</div>
+                </div>
+            </div>
+            <div
+                style="padding:6px 18px;border-radius:999px;background:#fde68a;color:#92400e;font-weight:600;font-size:13px;">
+                {{ status | replace('_', ' ') | title }}</div>
+        </div>
+        <div
+            style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:26px;color:#475569;">
+            <div>
+                <div style="font-size:12px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.08em;">Content</div>
+                <div style="font-size:16px;font-weight:600;color:#0f172a;">{{ content.title() }}</div>
+            </div>
+            <div>
+                <div style="font-size:12px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.08em;">Carrier</div>
+                <div style="font-size:16px;font-weight:600;color:#0f172a;">{{ partner }}</div>
+            </div>
+            <div>
+                <div style="font-size:12px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.08em;">Started at
+                </div>
+                <div style="font-size:16px;font-weight:600;color:#0f172a;">{{ created_at.strftime('%d %b %Y')
+                    }}</div>
+            </div>
+            <div>
+                <div style="font-size:12px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.08em;">Estimated
+                    delivery</div>
+                <div style="font-size:16px;font-weight:600;color:#0f172a;">{{ estimated_delivery.strftime('%d
+                    %b %Y') }}</div>
+            </div>
+        </div>
+        <div style="border-top:1px solid #e2e8f0;padding-top:24px;color:#475569;">
+            <div style="font-size:14px;font-weight:600;color:#0f172a;margin-bottom:16px;">Order history</div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                {% for event in timeline %}
+                <div style="display:flex;gap:12px;">
+                    <div style="width:6px;height:6px;border-radius:999px;background:#0f172a;margin-top:6px;"></div>
+                    <div>
+                        <div style="font-size:15px;font-weight:600;color:#0f172a;">{{ event.status.value.replace('_', '
+                            ').title() }}</div>
+                        <div style="font-size:13px;color:#94a3b8;">{{ event.location }} · {{
+                            event.created_at.strftime('%d %b %Y %I:%M %p') }}</div>
+                        {% if event.description %}
+                        <div style="font-size:13px;color:#475569;">{{ event.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
