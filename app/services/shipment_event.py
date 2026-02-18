@@ -89,11 +89,9 @@ class ShipmentEventService(BaseService):
                 subject="Your order was delivered ✅"
                 template_name = "mail_delivered.html"
         
-        context = {
-            "id": shipment.id,
-            "seller": shipment.seller.name,
-            "partner": shipment.delivery_partner.name
-        }
+        context["id"] = shipment.id
+        context["seller"] = shipment.seller.name
+        context["partner"] = shipment.delivery_partner.name
 
         await self.notification_service.send_message_with_template(
             recipients=[shipment.client_contact_email],
