@@ -69,16 +69,16 @@ async def get_current_partner(
 
 def get_shipment_service(session: SessionDep, tasks: BackgroundTasks):
     return ShipmentService(
-        session, DeliveryPartnerService(session), ShipmentEventService(session, tasks)
+        session, DeliveryPartnerService(session, tasks), ShipmentEventService(session, tasks)
     )
 
 
-def get_seller_service(session: SessionDep):
-    return SellerService(session)
+def get_seller_service(session: SessionDep, tasks: BackgroundTasks):
+    return SellerService(session, tasks)
 
 
-def get_delivery_partner_service(session: SessionDep):
-    return DeliveryPartnerService(session)
+def get_delivery_partner_service(session: SessionDep, tasks: BackgroundTasks):
+    return DeliveryPartnerService(session, tasks)
 
 
 SellerDep = Annotated[Seller, Depends(get_current_seller)]

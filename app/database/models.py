@@ -77,6 +77,7 @@ class ShipmentEvent(SQLModel, table=True):
 class User(SQLModel):
     name: str
     email: EmailStr
+    email_verified : bool = Field(default=False)
     password_hash: str
 
 class Seller(User, table=True):

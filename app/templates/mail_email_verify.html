@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your FastShip Account</title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-color: #f4f6fb;
+        color: #1e1e1e;
+        margin: 0;
+        padding: 0;
+      }
+
+      .email-wrapper {
+        width: 100%;
+        padding: 24px 0;
+        background-color: #f4f6fb;
+      }
+
+      .email-container {
+        width: 100%;
+        max-width: 620px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 12px 40px rgba(15, 15, 15, 0.12);
+        overflow: hidden;
+      }
+
+      .email-header {
+        padding: 32px;
+        text-align: center;
+        background: linear-gradient(135deg, #0c60ff, #3ebfff);
+        color: #ffffff;
+      }
+
+      .email-header h1 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 0.5px;
+      }
+
+      .email-body {
+        padding: 32px;
+      }
+
+      .email-body p {
+        line-height: 1.6;
+        margin: 0 0 16px;
+      }
+
+      .button {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #0c60ff;
+        color: #ffffff;
+        padding: 14px 28px;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+
+      .muted {
+        color: #6b6b6b;
+        font-size: 14px;
+      }
+
+      .footer {
+        padding: 24px 32px;
+        background-color: #f5f6fb;
+        border-top: 1px solid #e0e3eb;
+        font-size: 12px;
+        color: #818384;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-wrapper">
+      <div class="email-container">
+        <div class="email-header">
+          <h1>Verify Your FastShip Account</h1>
+        </div>
+        <div class="email-body">
+          <p>Hi {{ username }},</p>
+          <p>
+            Thanks for joining FastShip! To finish setting up your account, please verify your
+            email address so we can keep your delivery data safe.
+          </p>
+          <p>
+            Just tap the button below and we’ll confirm you’re the real deal.
+          </p>
+          <p>
+            <a class="button" href="{{ verification_url }}">Verify My Account</a>
+          </p>
+          <p class="muted">
+            This link will expire shortly, so if it doesn’t work try requesting a new verification email.
+          </p>
+          <p class="muted">
+            If you didn’t create a FastShip account, you can safely ignore this message.
+          </p>
+        </div>
+        <div class="footer">
+          FastShip • 2026 • Fast, reliable delivery tracking email.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

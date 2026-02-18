@@ -49,3 +49,10 @@ async def update_delivery_partner(
     return await service.update(
         partner.sqlmodel_update(update)
     )
+
+@router.get("/verify")
+async def verify_partner_email(token: str, service: DeliveryPartnerServiceDep):
+    await service.verify_email(token)
+    return {
+        "detail": "Account verified."
+    }

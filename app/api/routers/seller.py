@@ -31,3 +31,10 @@ async def logout_user(token_data: Annotated[dict, Depends(get_seller_access_toke
     return {
         "detail": "Successfully logged out"
     }
+
+@router.get("/verify")
+async def verify_seller_email(token: str, service: SellerServiceDep):
+    await service.verify_email(token)
+    return {
+        "detail": "Account verified."
+    }

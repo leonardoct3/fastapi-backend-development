@@ -7,6 +7,10 @@ _base_config = SettingsConfigDict(
     extra="ignore"
 )
 
+class AppSettings(BaseSettings):
+    APP_NAME: str = "FastShip"
+    APP_DOMAIN: str = "localhost:8000"
+
 class DatabaseSettings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -43,6 +47,8 @@ class NotificationSettings(BaseSettings):
     VALIDATE_CERTS: bool = True
 
     model_config = _base_config
+
+app_settings = AppSettings()
 
 db_settings = DatabaseSettings()
 
