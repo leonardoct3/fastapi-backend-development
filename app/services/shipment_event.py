@@ -74,11 +74,15 @@ class ShipmentEventService(BaseService):
                 add_shipment_verification_code(shipment.id, code)
 
                 if shipment.client_contact_phone:
-                    self.notification_service.send_sms(
-                        to=shipment.client_contact_phone,
-                        body=f"Your order is arriving soon! Share the {code} code with your"
-                        "delivery executive to receive your package."
-                    )
+                    try:
+                        self.notification_service.send_sms(
+                            to=shipment.client_contact_phone,
+                            body=f"Your order is arriving soon! Share the {code} code with your"
+                            "delivery executive to receive your package."
+                        )
+                    except Exception:
+                        context["verification_code"] = code
+
                 else:
                     context["verification_code"] = code
 
