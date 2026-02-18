@@ -1,4 +1,6 @@
+from random import randint
 from app.database.models import Shipment, ShipmentEvent, ShipmentStatus
+from app.database.redis import add_shipment_verification_code
 from app.services.base import BaseService
 from app.services.notification import NotificationService
 
@@ -57,42 +59,41 @@ class ShipmentEventService(BaseService):
             return
 
         subject: str
-        context = {}
         template_name: str
+        context: dict = {}
 
         match status:
             case ShipmentStatus.placed:
                 subject="Your order is shipped 🚛"
                 template_name = "mail_placed.html"
-                context = {
-                    "id": shipment.id,
-                    "seller": shipment.seller.name,
-                    "partner": shipment.delivery_partner.name
-                }
             case ShipmentStatus.out_for_delivery:
                 subject="Your order is out for delivery 🛵"
                 template_name = "mail_out_for_delivery.html"
-                context = {
-                    "id": shipment.id,
-                    "seller": shipment.seller.name,
-                    "partner": shipment.delivery_partner.name
-                }
+
+                code = randint(100_000, 999_999)
+                add_shipment_verification_code(shipment.id, code)
+
+                if shipment.client_contact_phone:
+                    self.notification_service.send_sms(
+                        to=shipment.client_contact_phone,
+                        body=f"Your order is arriving soon! Share the {code} code with your"
+                        "delivery executive to receive your package."
+                    )
+                else:
+                    context["verification_code"] = code
+
             case ShipmentStatus.cancelled:
                 subject="Your order was cancelled ❌"
                 template_name = "mail_cancelled.html"
-                context = {
-                    "id": shipment.id,
-                    "seller": shipment.seller.name,
-                    "partner": shipment.delivery_partner.name
-                }
             case ShipmentStatus.delivered:
                 subject="Your order was delivered ✅"
                 template_name = "mail_delivered.html"
-                context = {
-                    "id": shipment.id,
-                    "seller": shipment.seller.name,
-                    "partner": shipment.delivery_partner.name
-                }
+        
+        context = {
+            "id": shipment.id,
+            "seller": shipment.seller.name,
+            "partner": shipment.delivery_partner.name
+        }
 
         await self.notification_service.send_message_with_template(
             recipients=[shipment.client_contact_email],
