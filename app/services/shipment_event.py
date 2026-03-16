@@ -71,7 +71,7 @@ class ShipmentEventService(BaseService):
                 template_name = "mail_out_for_delivery.html"
 
                 code = randint(100_000, 999_999)
-                add_shipment_verification_code(shipment.id, code)
+                await add_shipment_verification_code(shipment.id, code)
 
                 if shipment.client_contact_phone:
                     try:
